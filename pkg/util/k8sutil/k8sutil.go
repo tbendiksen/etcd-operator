@@ -232,15 +232,15 @@ func newEtcdServiceManifest(svcName, clusterName, clusterIP string, ports []v1.S
 		ObjectMeta: metav1.ObjectMeta{
 			Name:   svcName,
 			Labels: labels,
-			Annotations: map[string]string{
-				TolerateUnreadyEndpointsAnnotation: strconv.FormatBool(publishNotReadyAddresses),
+			// Annotations: map[string]string{ // Deprecated
+				// TolerateUnreadyEndpointsAnnotation: strconv.FormatBool(publishNotReadyAddresses), Deprecated
 			},
 		},
 		Spec: v1.ServiceSpec{
 			Ports:     ports,
 			Selector:  labels,
 			ClusterIP: clusterIP,
-			// PublishNotReadyAddresses: publishNotReadyAddresses, // TODO(ckoehn): Activate once TolerateUnreadyEndpointsAnnotation is deprecated.
+			PublishNotReadyAddresses: publishNotReadyAddresses, 
 		},
 	}
 	return svc
